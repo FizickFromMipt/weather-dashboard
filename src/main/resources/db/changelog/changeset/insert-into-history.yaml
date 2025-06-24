@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-into-history
+      author: Alex Pevnenko
+      changes:
+        - sqlFile:
+            path: db/changelog/changeset/sql/insert-into-history.sql

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Погода</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+    <!-- Подключение локального CSS -->
+    <link rel="stylesheet" type="text/css" href="/style.css">
+</head>
+
+<body>
+<h1>Узнать погоду</h1>
+<!-- HTML-форма с одним полем для ввода города -->
+<form id="weatherForm">
+    <label for="city">Город:</label>
+    <input type="text" id="city" name="city" required>
+    <button type="submit">Получить</button>
+</form>
+
+<!-- Контейнер, куда будет выводиться результат -->
+<div id="result" style="margin-top: 20px;"></div>
+
+<script>
+    // Получаем форму по ID
+    document.getElementById('weatherForm').addEventListener('submit', async function (e) {
+        e.preventDefault(); // Отменяем стандартную отправку формы
+
+        const city = document.getElementById('city').value; // Получаем значение из input
+
+        try {
+            const response = await fetch(`/api/weather/${city}`); // Отправляем GET-запрос на твой API
+            if (!response.ok) throw new Error('Ошибка при получении данных');
+
+            const data = await response.json(); // Парсим JSON-ответ
+
+            // Отображаем результат в div#result
+            document.getElementById('result').innerHTML = `
+            <h2>Результат:</h2>
+            <p><strong>Город:</strong> ${data.city}</p>
+            <p><strong>Температура:</strong> ${data.temperature} °C</p>
+            <p><strong>Описание:</strong> ${data.description}</p>
+            <p><strong>Дата запроса:</strong> ${data.requestedAt}</p>
+        `;
+        } catch (err) {
+            document.getElementById('result').innerHTML = `<p style="color:red;">Ошибка: ${err.message}</p>`;
+        }
+    });
+</script>
+</body>
+
+</html>
