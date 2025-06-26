@@ -2,7 +2,7 @@ server:
   port: 8081
 
 weather:
-  api-key: 3f70ad1c3137c6ecfaa21313f7c8db45
+  api-key:
   url: https://api.openweathermap.org/data/2.5/weather
 
 translator:
